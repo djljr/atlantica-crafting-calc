@@ -1,0 +1,58 @@
+timestamp: 2008-10-08T21:21:00.211000
+CREATE TABLE component(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(32)
+);
+success!
+timestamp: 2008-10-08T21:21:00.320000
+CREATE TABLE skill(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(32)
+);
+success!
+timestamp: 2008-10-08T21:21:00.336000
+CREATE TABLE craftable(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(32),
+	description CHAR(32),
+	skill CHAR(32),
+	name CHAR(32)
+);
+timestamp: 2008-10-08T21:22:03.805000
+CREATE TABLE craftable(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(32),
+	description CHAR(32),
+	skill CHAR(32),
+	name CHAR(32)
+);
+timestamp: 2008-10-08T21:22:23.492000
+CREATE TABLE craftable(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(32),
+	description CHAR(32),
+	skill CHAR(32),
+	name CHAR(32)
+);
+timestamp: 2008-10-08T21:27:29.320000
+CREATE TABLE craftable(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(32),
+	description CHAR(32),
+	skill REFERENCES skill(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2008-10-08T21:27:29.367000
+CREATE TABLE formula(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	craftable REFERENCES craftable(id) ON DELETE CASCADE,
+	component REFERENCES component(id) ON DELETE CASCADE,
+	amount CHAR(32)
+);
+success!
+timestamp: 2008-10-08T21:37:39.102000
+ALTER TABLE component ADD cost DOUBLE;
+success!
+timestamp: 2008-10-09T00:15:11.274000
+ALTER TABLE craftable ADD experience INTEGER;
+success!

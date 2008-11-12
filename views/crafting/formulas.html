@@ -1,0 +1,18 @@
+{{extend 'layout.html'}}
+<h1>Formulas</h1>
+<table>
+{{for craftable in craftables:}}
+	<tr>
+		<td>{{=A(craftable.name,_href=URL(r=request,f='craft?id=%s'%craftable.id))}}</td>
+		<td>
+			<table>
+			<tr>
+			{{for component in components[craftable.id]:}}
+				<td>{{=component.component.name}} ({{=component.formula.amount}}) </td>
+			{{pass}}
+			</tr>
+			</table>
+		</td>
+	</tr>
+{{pass}}
+</table>

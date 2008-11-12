@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+<h1>Formulas</h1>
+<table>
+{{for formula in formulas:}}
+<tr>
+<td>{{=A(formula.craftable.name,_href=URL(r=request,f='craft?id=%s'%formula.craftable.id))}}</td>
+</tr>
+{{pass}}
+</table>

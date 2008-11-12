@@ -1,0 +1,61 @@
+{{extend 'test/craftlayout.html'}}
+<script type="text/javascript">
+	addLoadEvent(updateAmount);
+	addLoadEvent(updateRequired);
+	var expPer = {{=craftable.experience}};
+	function intDiv(num, den)
+	{
+		var remainder = num % den;
+		return ( num - remainder ) / den;
+	}
+	function updateAmount()
+	{
+		var curExp = $('exp').value;
+		var reqExp = $('level').value;
+		var amount = intDiv(reqExp - curExp, expPer) + 1;
+		if(amount<0) amount = 0;
+		$('amount').value=amount;
+		updateRequired();
+	}
+	
+	function updateRequired()
+	{
+		var amount = $('amount').value;
+		var tc = 0;
+		{{for c in components:}}
+		{
+			var curInv = $('inv_{{=c.component.id}}').value;
+			var curAble = intDiv(curInv, {{=c.formula.amount}});
+			var required = (amount-curAble)*{{=c.formula.amount}} - curInv;
+			if(required < 0) required = 0;
+			$('req_{{=c.component.id}}').innerHTML = required;
+			var cc = required * {{=c.component.cost}};
+			$('mkt_{{=c.component.id}}').innerHTML = cc;
+			tc += cc;
+		}
+		{{pass}}
+		$('tc').innerHTML=tc;
+	}
+</script>
+<h1>{{=craftable.name}}</h1>
+<div>Exp Per: {{=craftable.experience}}</div>
+<label>Current Exp: <input id="exp" onkeyup="updateAmount();"/></label> / <label>Level Exp: <input id="level" onkeyup="updateAmount();"/></label> <br />
+<label>Number to Craft: <input id="amount" onkeyup="updateRequired();" /></label>
+<table>
+	<tr>
+		<th>Component</th><th>Amount</th><th>Cost</th><th>Inventory</th><th>Required</th><th>Market Cost</th>
+	</tr>
+{{for c in components:}}
+	<tr>
+		<td>{{=c.component.name}}</td>
+		<td>{{=c.formula.amount}}</td>
+		<td>{{=c.component.cost}}</td>
+		<td><input id="inv_{{=c.component.id}}" size="3" onkeyup="updateRequired()"/></td>
+		<td><span id="req_{{=c.component.id}}"></span></td>
+		<td><span id="mkt_{{=c.component.id}}"></span></td>
+	</tr>
+{{pass}}
+	<tr>
+		<td>Total Cost:</td><td colspan="5" style="text-align:right"><div><span id="tc" /></div></td>
+	</tr>
+</table>
