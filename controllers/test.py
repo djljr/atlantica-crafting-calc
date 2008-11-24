@@ -1,9 +1,4 @@
-app=request.application
-response.menu=[
-  ['home',request.function=='index','/%s/index'%app],
-  ['formulas',request.function=='formulas','/%s/crafting/formulas'%app],
-  ['new formula',request.function=='add_formula','/%s/crafting/add_formula'%app]]
-  
+# try something likedef index(): return dict(message="hello from test.py")
 def test():
 	c = db((db.formula.craftable==1)&(db.formula.component==db.component.id)).select(db.component.ALL,db.formula.ALL)
 	return dict(records=c)
@@ -24,11 +19,3 @@ def craft():
 	components = db((db.formula.craftable==id)&(db.formula.component==db.component.id))\
 			.select(db.component.ALL,db.formula.ALL)
 	return dict(craftable=craftable[0],components=components)
-	
-def add_formula():
-	form=FORM(INPUT(_name='c1',requires=IS_NOT_EMPTY()))
-	if form.accepts(request.vars, session):
-		pass
-	elif form.errors:
-		pass
-	return dict(form=form)

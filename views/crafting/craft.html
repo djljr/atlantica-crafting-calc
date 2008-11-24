@@ -1,4 +1,4 @@
-{{extend 'test/craftlayout.html'}}
+{{extend 'crafting/craftlayout.html'}}
 <script type="text/javascript">
 	addLoadEvent(updateAmount);
 	addLoadEvent(updateRequired);
@@ -26,7 +26,7 @@
 		{
 			var curInv = $('inv_{{=c.component.id}}').value;
 			var curAble = intDiv(curInv, {{=c.formula.amount}});
-			var required = (amount-curAble)*{{=c.formula.amount}} - curInv;
+			var required = amount*{{=c.formula.amount}} - curInv;
 			if(required < 0) required = 0;
 			$('req_{{=c.component.id}}').innerHTML = required;
 			var cc = required * {{=c.component.cost}};
